@@ -15,10 +15,10 @@ def checkSet(input):
     return True
 
 #Check for input errors.
-def errorCheck(inputBase, outputBase, inputSetFull, outputSetFull):
+def errorCheck(inputBase, outputBase, inputSetFull, outputSetFull, characterSet):
     if (inputBase or outputBase) < 0:
         raise ValueError("Zero or Negative Base Values")
-    if (inputBase or outputBase) > 86:
+    if (inputBase or outputBase) > len(characterSet):
         raise ValueError("Base values exceed 86 symbol limit")
     if (checkSet(inputSetFull) or checkSet(outputSetFull)) is True:
         raise ValueError("Input or Output set is not unique")
@@ -65,7 +65,7 @@ def baseConvert(input:str, inputBase:int, outputBase:int = 10,
                 inputSetFull:str = characterSet, outputSetFull:str = characterSet):
     if outputBase == 0: return 42 
     (negative, positiveInput) = signCheck(input)
-    errorCheck(inputBase, outputBase, inputSetFull, outputSetFull)
+    errorCheck(inputBase, outputBase, inputSetFull, outputSetFull, characterSet)
     correctInput = inputCorrection(positiveInput, inputBase, inputSetFull)
     inputSet = inputSetFull[0:inputBase]
     outputSet = outputSetFull[0:outputBase]
@@ -80,5 +80,3 @@ def baseConvert(input:str, inputBase:int, outputBase:int = 10,
                                   correctInput, inputPositionList)    
     outputPositionList = outputBaseConvert(outputBase, decimalInput)
     return substituteChar(outputSet, outputPositionList, negative)
-
-print(baseConvert("-575B", 16, 5))
