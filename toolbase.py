@@ -25,7 +25,7 @@ def errorCheck(inputBase, outputBase, inputSetFull, outputSetFull, characterSet)
 
 #Correct for input errors.
 def inputCorrection(input, inputBase, inputSetFull):
-    if inputBase <= 36 and inputSetFull == characterSet: return input.lower()
+    if inputBase < 36 and inputSetFull == characterSet: return input.lower()
     return input
 
 #Check if input is + or -.
