@@ -112,3 +112,4 @@ def baseConvert(inputString:str, inputBase:int, outputBase:int = 10, places:int 
                                   correctInput, inputPositionList)
     outputPositionList = outputBaseConvert(outputBase, decimalInput, places)
     return substituteChar(outputSet, outputPositionList, negative, places, inputString)
+    
