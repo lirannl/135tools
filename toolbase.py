@@ -1,6 +1,7 @@
 #Tool to convert numbers between any base with any printable character sets.
 #Created date: 05/01/2021
-import math
+from math import pow
+from re import search
 #Default character set.
 charSet = "".join([
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g',
@@ -20,11 +21,13 @@ def errorCheck(inputBase, outputBase, inputSetFull, outputSetFull, charSet, plac
     if (inputBase or outputBase) < 0:
         raise ValueError("Zero or Negative Base Values")
     if (inputBase or outputBase) > len(charSet):
-        raise ValueError("Base values exceed 86 symbol limit")
+        raise ValueError("Base values exceed symbol limit")
     if (checkSet(inputSetFull) or checkSet(outputSetFull)) is True:
         raise ValueError("Input or Output set is not unique")
     if places < 0 or places > 24:
         raise ValueError("Decimal places input is invalid")
+    if search("[.-]", (inputSetFull + outputSetFull)) is not None: 
+        raise ValueError("Custom character set contains - or .") 
 
 #Correct for input errors.
 def inputCorrection(input, inputBase, inputSetFull):
@@ -86,7 +89,7 @@ def inputBaseConvert(correctInput, inputSet, outputSet):
 #Convert to output base.
 def outputBaseConvert(outputBase, quotient, places, remainder = []):
     if remainder == [] and isinstance(quotient, float):
-        inputQuotient = quotient * math.pow(outputBase, places)
+        inputQuotient = quotient * pow(outputBase, places)
     else: inputQuotient = quotient
     if outputBase == 1: return [0] * inputQuotient
     if inputQuotient == 0: return remainder
@@ -95,8 +98,9 @@ def outputBaseConvert(outputBase, quotient, places, remainder = []):
                              [newRemainder] + remainder)
 
 #Convert number base with error checking.
-def baseConvert(inputString:str, inputBase:int, outputBase:int = 10, places:int = 2,
-                inputSetFull:str = charSet, outputSetFull:str = charSet):
+def baseConvert(inputString:str, inputBase:int, outputBase:int = 10, 
+                inputSetFull:str = charSet, outputSetFull:str = charSet, 
+                places:int = 2):
     if outputBase == 0: return 42 
     (negative, positiveInput) = signCheck(inputString)
     errorCheck(inputBase, outputBase, inputSetFull, 
@@ -112,4 +116,4 @@ def baseConvert(inputString:str, inputBase:int, outputBase:int = 10, places:int 
                                   correctInput, inputPositionList)
     outputPositionList = outputBaseConvert(outputBase, decimalInput, places)
     return substituteChar(outputSet, outputPositionList, negative, places, inputString)
-    
+
