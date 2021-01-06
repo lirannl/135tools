@@ -1,4 +1,4 @@
-#Tool to convert numbers between any base with any printable character sets.
+#Tool to convert int/float numbers between bases 0-86 with given character sets.
 #Created date: 05/01/2021
 from math import pow
 from re import search
@@ -30,7 +30,7 @@ def errorCheck(inputBase, outputBase, inputSetFull, outputSetFull, charSet, plac
         raise ValueError("Custom character set contains - or .") 
 
 #Correct for input errors.
-def inputCorrection(input, inputBase, inputSetFull):
+def inputCorrection(input, inputBase, inputSetFull,):
     if inputBase < 36 and inputSetFull == charSet: return input.lower()
     return input
 
@@ -44,9 +44,7 @@ def substituteChar(outputSet, posList, negative, places = 0, input = ""):
     if places != 0 and "." in input:
         absPosList = (list(map(int, posList)))
         floatInput = True 
-    else: 
-        absPosList = posList
-        floatInput = False
+    else: absPosList, floatInput = posList, False
     subList = list(map(lambda point: outputSet[point], absPosList))
     if floatInput: subList.insert(places * -1, ".")
     if negative: return "-" + "".join(subList)
@@ -66,13 +64,10 @@ def decimalConvert(inputSet, inputBase, charSet, positiveInput, inputPosList):
         intPosList = inputPosList[inputPosList.index(len(inputSet)-1) + 1:]
         decPosList = reversed(inputPosList[:inputPosList.index(len(inputSet)-1)])
         floatInput = True
-    else: 
-        intPosList = inputPosList
-        floatInput = False
+    else: intPosList, floatInput = inputPosList, False
     decimalList = map(lambda point: 
                   (inputBase ** point[0]) * point[1], enumerate(intPosList))
-    if not floatInput:
-        return sum(decimalList)
+    if not floatInput: return sum(decimalList)
     floatList = map(lambda point:
                 (inputBase ** (point[1] * -1)) * point[1], enumerate(decPosList))
     return (sum(decimalList) + sum(floatList))
@@ -91,7 +86,6 @@ def outputBaseConvert(outputBase, quotient, places, remainder = []):
     if remainder == [] and isinstance(quotient, float):
         inputQuotient = quotient * pow(outputBase, places)
     else: inputQuotient = quotient
-    if outputBase == 1: return [0] * inputQuotient
     if inputQuotient == 0: return remainder
     newQuotient, newRemainder = divmod(inputQuotient, outputBase)
     return outputBaseConvert(outputBase, newQuotient, places, 
@@ -100,7 +94,7 @@ def outputBaseConvert(outputBase, quotient, places, remainder = []):
 #Convert number base with error checking.
 def baseConvert(inputString:str, inputBase:int, outputBase:int = 10, 
                 inputSetFull:str = charSet, outputSetFull:str = charSet, 
-                places:int = 2):
+                places:int = 5):
     if outputBase == 0: return 42 
     (negative, positiveInput) = signCheck(inputString)
     errorCheck(inputBase, outputBase, inputSetFull, 
@@ -112,8 +106,11 @@ def baseConvert(inputString:str, inputBase:int, outputBase:int = 10,
     if inputBase == outputBase:
         return substituteInput(inputSet, outputSet, negative, 
                                correctInput, inputPositionList)
+    print(inputPositionList)
     decimalInput = decimalConvert(inputSet, inputBase, charSet, 
                                   correctInput, inputPositionList)
     outputPositionList = outputBaseConvert(outputBase, decimalInput, places)
     return substituteChar(outputSet, outputPositionList, negative, places, inputString)
-
+#101110101.1
+#1KxsB.4elwg0000000000
+print(baseConvert("101011.11", 2, 10, places = 20))
