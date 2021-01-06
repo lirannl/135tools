@@ -56,7 +56,7 @@ def convertDecimal(absInString, inputBase, inCutSet, inputPosList):
     intPosList, decPosList, floatInput = inputDecSplit(inCutSet, inputPosList)
     intList = map(lambda pos:(inputBase ** pos[0])*pos[1], enumerate(intPosList))
     if not floatInput: return sum(intList)
-    decList = map(lambda pos:(inputBase ** (pos[0]*-1))*pos[1], enumerate(decPosList))
+    decList = map(lambda pos:(inputBase ** (pos[0]*-1)-1)*pos[1], enumerate(decPosList))
     print(list(decList))
     return (sum(intList) + sum(decList))
 #Convert base of number.
@@ -71,4 +71,4 @@ def baseConvert(inputString:str, inputBase:int, outputBase:int = 10,
     decInString = convertDecimal(absInString, inputBase, inCutSet, inputPosList)
     return decInString
 
-print(baseConvert("101011.11", 2, 10, decimals = 20))
+print(str(baseConvert("101011.11", 2, 10, decimals = 20)))
