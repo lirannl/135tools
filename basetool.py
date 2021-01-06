@@ -14,16 +14,18 @@ charSet = "".join([
 def isSet(inputSet):
     return len(inputSet) == len(set(inputSet))
 #Check for bad inputs.
-def valuesCheck(inBase, outputBase, inputSet, outputSet, charSet, fracPlaces):
+def valuesCheck(inBase, outBase, inputSet, outputSet, charSet, fracPlaces):
     if inBase < 2 or inBase > len(charSet):
         raise ValueError("Input base is out of range")
-    if outputBase < 0 or outputBase > len(charSet):
+    if outBase < 0 or outBase > len(charSet):
         raise ValueError("Output base is out of range")
+    if inBase > len(inputSet) or outBase > len(outputSet):
+        raise ValueError("Custom set doesn't satisfy base")
     if not (isSet(inputSet) or not isSet(outputSet)):
         raise ValueError("Custom set is not unique")
     if search("[.-]", inputSet + outputSet) is not None:
         raise ValueError("Custom set contains - or .")
-    if fracPlaces < 0 or fracPlaces > 24:
+    if fracPlaces < 0 or fracPlaces > 32:
         raise ValueError("Number decimals is out of range")
 #Trim inputSet to base.
 def trimSet(inputSet, inBase):
@@ -60,10 +62,10 @@ def convertDecimal(absInString, inBase, inCutSet, inPosList):
 def inputDivmod(inputQuotient, outBase, remainder = []):
     quotient, remainderList = divmod(inputQuotient, outBase)
     if inputQuotient == 0: return remainder
-    return inputDivmod(quotient, outBase, [int(remainderList)] + remainder)
+    return inputDivmod(quotient, outBase, [remainderList] + remainder)
 #Convert number to output base.
 def outputPosition(fracInString, outBase, fracPlaces):
-    if isinstance(float(fracInString), float):
+    if search(".", str(fracInString)) is True:
         inputQuotient = float(fracInString) * pow(outBase, fracPlaces)
     else: inputQuotient = int(fracInString)
     return inputDivmod(inputQuotient, outBase)
@@ -73,6 +75,7 @@ def subCharacters(outPosList, outCutSet):
 #Format sign and decimal place.
 def outputFormat(string, fracPlaces, fracInput, sign):
     if fracInput: fracString = string[:(fracPlaces*-1)] + "." + string[(fracPlaces*-1):]
+    else: fracString = string
     if sign: return "-" + fracString
     return fracString
 #Convert base of number.
@@ -88,4 +91,7 @@ def baseConvert(inputString:str, inBase:int, outBase:int = 10,
     outputString = subCharacters(outPosList, outCutSet)
     return outputFormat(outputString, fracPlaces, fracInput, sign)
 
-print(baseConvert("-101011.11", 2, 36, fracPlaces = 1))
+print(baseConvert("10101010101011111", 2, 2, '10', '10', fracPlaces = 1))
+                   #1010101010100000
+                   #1010101010100000
+                  #01010101010100000
