@@ -62,10 +62,10 @@ def convertDecimal(absInString, inBase, inCutSet, inPosList):
 def inputDivmod(inputQuotient, outBase, remainder = []):
     quotient, remainderList = divmod(inputQuotient, outBase)
     if inputQuotient == 0: return remainder 
-    return inputDivmod(quotient, outBase, [remainderList] + remainder)
+    return inputDivmod(quotient, outBase, [int(remainderList)] + remainder)
 #Convert number to output base.
 def outputPosition(fracInString, outBase, fracPlaces):
-    if search(".", str(fracInString)) is True:
+    if "." in str(fracInString):
         inputQuotient = float(fracInString) * pow(outBase, fracPlaces)
     else: inputQuotient = int(fracInString)
     return inputDivmod(inputQuotient, outBase)
@@ -91,6 +91,4 @@ def baseConvert(inputString:str, inBase:int, outBase:int = 10,
     outputString = subCharacters(outPosList, outCutSet)
     return outputFormat(outputString, fracPlaces, fracInput, sign)
 
-print(baseConvert("10101010101011111", 2, 2, '01', 'ab', fracPlaces = 1))
-                  #bababababababbbbb
-                   #0101010101011111
+print(baseConvert("X.b6", 86, 10, fracPlaces = 2))
