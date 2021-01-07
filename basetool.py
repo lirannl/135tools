@@ -25,8 +25,8 @@ def valuesCheck(inBase, outBase, inputSet, outputSet, charSet, fracPlaces):
         raise ValueError("Custom set is not unique")
     if search("[.-]", inputSet + outputSet) is not None:
         raise ValueError("Custom set contains - or .")
-    if fracPlaces < 0 or fracPlaces > 32:
-        raise ValueError("Number decimals is out of range")
+    if fracPlaces < 0:
+        raise ValueError("Negative decimal places invalid")
 #Trim inputSet to base.
 def trimSet(inputSet, inBase):
     return inputSet[0:inBase] + "."
@@ -74,7 +74,8 @@ def subCharacters(outPosList, outCutSet):
     return "".join(list(map(lambda pos: outCutSet[pos], outPosList)))
 #Format sign and decimal place.
 def outputFormat(string, fracPlaces, fracInput, sign):
-    if fracInput: fracString = string[:(fracPlaces*-1)] + "." + string[(fracPlaces*-1):]
+    if fracInput and fracPlaces != 0: 
+        fracString = string[:(fracPlaces*-1)] + "." + string[(fracPlaces*-1):]
     else: fracString = string
     if sign: return "-" + fracString
     return fracString
@@ -91,4 +92,4 @@ def baseConvert(inputString:str, inBase:int, outBase:int = 10,
     outputString = subCharacters(outPosList, outCutSet)
     return outputFormat(outputString, fracPlaces, fracInput, sign)
 
-print(baseConvert("X.b6", 86, 10, fracPlaces = 2))
+print(baseConvert("XXX", 86, 5, outputSet = "liran"))
