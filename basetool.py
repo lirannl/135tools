@@ -91,5 +91,3 @@ def baseConvert(inputString:str, inBase:int, outBase:int = 10,
     outPosList = outputPosition(fracInString, outBase, fracPlaces)
     outputString = subCharacters(outPosList, outCutSet)
     return outputFormat(outputString, fracPlaces, fracInput, sign)
-
-print(baseConvert("XXX", 86, 5, outputSet = "Apples"))
