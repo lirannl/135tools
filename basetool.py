@@ -1,3 +1,4 @@
+category="tools"
 #Tool to convert int/float numbers between bases 0-86 with given character sets.
 #Created date: 05/01/2021
 from math import pow

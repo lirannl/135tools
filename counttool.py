@@ -1,3 +1,4 @@
+category="tools"
 #Tool to analyse the frequency of each character in a data set.
 #Created date: 09/01/2021
 #Format spaces and capitals in input.
