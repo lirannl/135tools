@@ -81,7 +81,7 @@ def outputFormat(string, fracPlaces, fracInput, sign):
     if sign: return "-" + fracString
     return fracString
 #Convert base of number.
-def baseConvert(inputString:str, inBase:int, outBase:int = 10,
+def API_baseConvert(inputString:str, inBase:int, outBase:int = 10,
                 inputSet:str = charSet, outputSet:str = charSet, fracPlaces:int = 5 ):
     valuesCheck(inBase, outBase, inputSet, outputSet, charSet, fracPlaces)
     inCutSet, outCutSet = trimSet(inputSet, inBase), trimSet(outputSet, outBase)
