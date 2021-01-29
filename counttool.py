@@ -18,3 +18,5 @@ def charAnalysis(inputString:str, spaces:bool = True, capitals:bool = True):
     percentList = list(map(lambda pos:round((int(pos)/length)*100, 3), countList))
     charDict = zip(charSet, countList, percentList)
     return sorted(charDict, key=charOrder, reverse=True)
+
+print(charAnalysis("Took ya long enough to respond", False, False))
