@@ -1,3 +1,4 @@
+category="tools"
 #Tool to analyse the frequency of each character in a data set.
 #Created date: 09/01/2021
 #Format spaces and capitals in input.
@@ -11,7 +12,7 @@ def charOrder(inPos):
     _, charCount, charPercent = inPos
     return charCount, charPercent
 #Analyse input for character occurrences.
-def charAnalysis(inputString:str, spaces:bool = True, capitals:bool = True):
+def API_charAnalysis(inputString:str, spaces:bool = True, capitals:bool = True):
     inString, length = stringFormat(inputString, spaces, capitals)
     charSet = list(set(inString))
     countList = list(map(lambda pos:inString.count(pos), charSet))
