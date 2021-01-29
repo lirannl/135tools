@@ -132,7 +132,7 @@ def baseConvert(inputString: str, inBase: int, outBase: int = 10,
     return outputFormat(outputString, fracPlaces, fracInput, sign)
 
 
-def API_convert(_key:str, inputString: str, inputBase: str,
+def API_convert(_key, inputString: str, inputBase: str,
                 outputBase: str = "10", inputSet: str = charSet,
                 outputSet: str = charSet, fracPlaces: str = "5"):
     return baseConvert(inputString, int(inputBase), int(outputBase), inputSet, outputSet, int(fracPlaces))
