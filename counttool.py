@@ -1,6 +1,6 @@
-category="tools"
-#Tool to analyse the frequency of each character in a data set.
+#Tool to analyse and compare the frequency of each character in a data set.
 #Created date: 09/01/2021
+category = "tools"
 #Format spaces and capitals in input.
 def stringFormat(inputString, spaces, capitals):
     if spaces: spaceString = inputString
@@ -20,4 +20,3 @@ def API_charAnalysis(inputString:str, spaces:bool = True, capitals:bool = True):
     charDict = zip(charSet, countList, percentList)
     return sorted(charDict, key=charOrder, reverse=True)
 
-print(charAnalysis("Took ya long enough to respond", False, False))
