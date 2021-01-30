@@ -97,3 +97,5 @@ def baseConvert(inputString: str, inBase: str, outBase: str = "10",
     outputString = subCharacters(outPosList, outCutSet)
     return outputFormat(outputString, fracPlacesInt, fracInput, sign)
 
+# Expose baseConvert to the API as convert
+API_convert = baseConvert
