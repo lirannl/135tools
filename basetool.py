@@ -18,7 +18,7 @@ def isSet(inputSet):
 def valuesCheck(inBase, outBase, inputSet, outputSet, charSet, fracPlaces):
     if inBase < 2 or inBase > len(charSet): 
         raise ValueError("Input base is out of range")
-    if outBase < 0 or outBase > len(charSet):
+    if outBase < 2 or outBase > len(charSet):
         raise ValueError("Output base is out of range")
     if inBase > len(inputSet) or outBase > len(outputSet):
         raise ValueError("Custom set doesn't satisfy base")
