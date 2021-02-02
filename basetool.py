@@ -29,7 +29,7 @@ def valuesCheck(inBase, outBase, inputSet, outputSet, charSet, fracPlaces):
     if search("[.-]", inputSet + outputSet) is not None:
         raise ValueError("Custom set contains - or .")
     if fracPlaces < 0:
-        raise ValueError("Negative decimal places invalid")
+        raise ValueError("Negative fractional places value")
 # Trim inputSet to base.
 def trimSet(inputSet, inBase):
     return inputSet[0:inBase] + "."
