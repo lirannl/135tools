@@ -8,8 +8,8 @@ category = "tools"
 
 #Format spaces and capitals in input.
 def stringFormat(inputString, excludeSpaces, caseSensitive):
-    if excludeSpaces: inputString.replace(" ", "")
-    else: spaceString = spaceString = inputString
+    if excludeSpaces: spaceString = inputString.replace(" ", "")
+    else: spaceString = inputString
     if caseSensitive: return spaceString, len(spaceString)
     return spaceString.lower(), len(spaceString)
     
@@ -27,3 +27,4 @@ def API_charAnalysis(inputString:str, excludeSpaces:bool = True, caseSensitive:b
     charDict = zip(charSet, countList, percentList)
     return sorted(charDict, key=charOrder, reverse=True)
 
+########################################################################################
