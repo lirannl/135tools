@@ -27,7 +27,7 @@ def charOrder(inPos):
 # caseSensitive: Boolean for if Capital and Lower Case Characters Should be Seperate.
 # Returns: List of Lists Containing Count and Percentage that Character for all Characters.
 def API_charAnalysis(inputString:str, 
-                    excludeSpaces:bool = True, caseSensitive:bool = True):
+                     excludeSpaces:bool = True, caseSensitive:bool = True):
     # Format Input with Respect to Case and Spaces Boolean Arguments.
     inString, length = stringFormat(inputString, excludeSpaces, caseSensitive)
     # Create Set of all Unique Characters Contained in Input.
