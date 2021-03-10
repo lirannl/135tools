@@ -27,12 +27,13 @@ def isSet(inputSet):
 
 # Function: valuesCheck
 # Purpose: Test if Inputs Meet Requirements.
-def valuesCheck(inBase, outBase, inCutSet, outCutSet, charSet, fracPlaces):
+def valuesCheck(inBase, outBase, inputSet, outputSet, 
+                inCutSet, outCutSet, charSet, fracPlaces):
     if inBase < 2 or inBase > len(charSet): 
         raise ValueError("Input base is out of range")
     if outBase < 2 or outBase > len(charSet):
         raise ValueError("Output base is out of range")
-    if inBase > 86 or outBase > 86:
+    if inBase > len(inputSet) or outBase > len(outputSet):
         raise ValueError("Custom set doesn't satisfy base")
     if not isSet(inCutSet):
         raise ValueError("Input set is not unique")
@@ -123,7 +124,8 @@ def baseConvert(inputString: str, inBase: str, outBase: str = "10",
     inCutSet = inputSet[0:inBase] + "."
     outCutSet = outputSet[0:outBase] + "."
     # Test Inputs for any Incorrect Arguments.
-    valuesCheck(inBaseInt, outBaseInt, inCutSet, outCutSet, charSet, fracPlacesInt)
+    valuesCheck(inBaseInt, outBaseInt, inputSet, outputSet, 
+                inCutSet, outCutSet, charSet, fracPlacesInt)
     # Check and Store if Input is Positive or Negative.
     absInString, sign = inputSign(inputString)
     # Index all Character Inputs against Input Character Set.
