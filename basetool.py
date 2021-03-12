@@ -25,22 +25,25 @@ charSet = "".join([
 def isSet(inputSet):
     return len(inputSet) == len(set(inputSet))
 
+# Function: setCheck
+# Purpose: Test if Sets meet Requirements.
+def setCheck(inBase, outBase, inputSet, outputSet):
+    if inBase > len(inputSet) or outBase > len(outputSet):
+        raise ValueError("Custom set doesn't satisfy base")
+    if search("[.-]", inputSet + outputSet) is not None:
+        raise ValueError("Custom set contains - or .")
+
 # Function: valuesCheck
 # Purpose: Test if Inputs Meet Requirements.
-def valuesCheck(inBase, outBase, inputSet, outputSet, 
-                inCutSet, outCutSet, charSet, fracPlaces):
+def valuesCheck(inBase, outBase, inCutSet, outCutSet, charSet, fracPlaces):
     if inBase < 2 or inBase > len(charSet): 
         raise ValueError("Input base is out of range")
     if outBase < 2 or outBase > len(charSet):
         raise ValueError("Output base is out of range")
-    if inBase > len(inputSet) or outBase > len(outputSet):
-        raise ValueError("Custom set doesn't satisfy base")
     if not isSet(inCutSet):
         raise ValueError("Input set is not unique")
     if not isSet(outCutSet):
         raise ValueError("Output set is not unique")
-    if search("[.-]", inputSet + outputSet) is not None:
-        raise ValueError("Custom set contains - or .")
     if fracPlaces < 0:
         raise ValueError("Negative fractional places value")
 
@@ -99,10 +102,10 @@ def subCharacters(outPosList, outCutSet):
 
 # Function: outputFormat
 # Returns: Output Integer Correctly Formatted (Applicable Sign and/or Decimal Point).
-def outputFormat(string, fracPlaces, fracInput, sign):
+def outputFormat(string, fracPlaces, outCutSet, fracInput, sign):
     if fracInput and fracPlaces != 0:
         Integer = string[:(fracPlaces*-1)]
-        if not Integer: fracString = "0" + "." + string[(fracPlaces*-1):]
+        if not Integer: fracString = outCutSet[0] + "." + string[(fracPlaces*-1):]
         else: fracString = Integer + "." + string[(fracPlaces*-1):]
     else: fracString = string
     if sign: return "-" + fracString
@@ -120,12 +123,13 @@ def baseConvert(inputString: str, inBase: str, outBase: str = "10",
     # Check Integer Argument Inputs are Integers.
     try: inBaseInt, outBaseInt, fracPlacesInt = int(inBase), int(outBase), int(fracPlaces)
     except: raise ValueError("Integer arguments contain non-integer values")
+    # Check Set Length and test for Illegal Characters.
+    setCheck(inBase, outBase, inputSet, outputSet)
     # Trim Input and Output Character Sets to Length of Input and Output Bases.
     inCutSet = inputSet[0:inBase] + "."
     outCutSet = outputSet[0:outBase] + "."
     # Test Inputs for any Incorrect Arguments.
-    valuesCheck(inBaseInt, outBaseInt, inputSet, outputSet, 
-                inCutSet, outCutSet, charSet, fracPlacesInt)
+    valuesCheck(inBaseInt, outBaseInt, inCutSet, outCutSet, charSet, fracPlacesInt)
     # Check and Store if Input is Positive or Negative.
     absInString, sign = inputSign(inputString)
     # Index all Character Inputs against Input Character Set.
@@ -137,7 +141,7 @@ def baseConvert(inputString: str, inBase: str, outBase: str = "10",
     # Substitute Output Index Values for Output Character Set Values.
     outputString = subCharacters(outPosList, outCutSet)
     # Correctly Format Output (sign, decimal point).
-    return outputFormat(outputString, fracPlacesInt, fracInput, sign)
+    return outputFormat(outputString, fracPlacesInt, outCutSet, fracInput, sign)
 
 ##########################################################################################
 # Expose baseConvert to the API as convert
